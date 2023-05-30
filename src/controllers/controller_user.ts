@@ -4,16 +4,18 @@ import * as bcrypt from "https://deno.land/x/bcrypt@v0.4.1/mod.ts";
 
 import { WebError } from "../models/model_webError.ts";
 import { userModel } from "../models/model_user.ts";
+// import { sendMailFromNodeMailer } from "../servises/msgGmail/index.ts";
 
-export const viewRegistUser = (_req: Request, res: Response) => {
-    res.send("hola :)!");
-}
 
-// export const allUser = async (_req: Request, res: Response) => {
-    
-//     const users = await userModel.find();
-//     res.send(users);
+// export const viewRegistUser = (_req: Request, res: Response) => {
+//     res.send("hola :)!");
 // }
+
+export const allUser = async (_req: Request, res: Response) => {
+    
+    const users = await userModel.find();
+    res.send(users);
+}
 
 export const createUser = async (req: Request, res: Response) => {
 
@@ -97,9 +99,11 @@ export const createUser = async (req: Request, res: Response) => {
             productos: []
         })
         
-       
-        await newUser.save();
         
+        await newUser.save();
+
+        // await sendMailFromNodeMailer(newUser)
+
         res.json({
             message: `Usuario: ${name} ${lastname} con email: ${email}, registrado con exito`
         })

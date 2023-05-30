@@ -6,7 +6,7 @@ import { StatusCodes } from 'https://deno.land/x/https_status_codes@v1.2.0/mod.t
 import { WebError } from '../models/model_webError.ts';
 import { userModel } from '../models/model_user.ts';
 
-const secret = 'my_secret'
+const secret = Deno.env.get("SECRET")
 
 export const loginUser = async (req: Request, res: Response) => {
 
