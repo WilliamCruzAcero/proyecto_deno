@@ -1,7 +1,7 @@
-<%- include('./header')-%>
+<%-await include('views/header.ejs') %>
     <body onload="load()" style="background: rgb(152, 152, 253);">
        
-        <%- include('./navbar')-%>
+        <%-await include('views/navbar.ejs') %>
         <div >
             <h1>Bienvenido a Ecommerce</h1>
             <h2>Registrate para acceder a nuestros servicios</h2>
@@ -10,5 +10,5 @@
        <script src="./javascript/set-navBar-token.js"></script>
        <script src="./javascript/home.js"></script>
     </body>
+<%-await include('views/footer.ejs') %>
 
-<%- include('./pie')-%>

@@ -2,11 +2,18 @@ import {Request, Response} from 'npm:express'
 import jwt from 'npm:jsonwebtoken';
 import * as bcrypt from "https://deno.land/x/bcrypt@v0.4.1/mod.ts";
 import { StatusCodes } from 'https://deno.land/x/https_status_codes@v1.2.0/mod.ts';
+const { cwd} = Deno;
+import { renderFileToString } from "https://deno.land/x/dejs@0.10.2/mod.ts";
 
 import { WebError } from '../models/model_webError.ts';
 import { userModel } from '../models/model_user.ts';
 
 const secret = Deno.env.get("SECRET")
+
+export const viewLogin = async (_req: Request, res: Response) => {
+        const viewLogin = await renderFileToString(`${cwd()}/views/formulario-inicio-sesion.ejs`, {});
+        res.send(viewLogin)
+}
 
 export const loginUser = async (req: Request, res: Response) => {
 

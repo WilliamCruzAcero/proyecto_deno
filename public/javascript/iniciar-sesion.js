@@ -7,7 +7,7 @@ function load () {
 
 async function obtenerToken() {
 
-    const url = "/sesion";
+    const url = "/login";
     const emailElement = document.getElementById('emailUsuario');
     const passwordElement = document.getElementById('passwordUsuario');
     const email = emailElement.value;

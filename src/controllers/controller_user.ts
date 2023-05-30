@@ -6,10 +6,14 @@ import { WebError } from "../models/model_webError.ts";
 import { userModel } from "../models/model_user.ts";
 // import { sendMailFromNodeMailer } from "../servises/msgGmail/index.ts";
 
+const { cwd} = Deno;
+import { renderFileToString } from "https://deno.land/x/dejs@0.10.2/mod.ts";
 
-// export const viewRegistUser = (_req: Request, res: Response) => {
-//     res.send("hola :)!");
-// }
+
+export const viewRegistUser = async (_req: Request, res: Response) => {
+        const viewRegistUser = await renderFileToString(`${cwd()}/views/formulario-registrar-usuario.ejs`, {});
+        res.send(viewRegistUser)
+}
 
 export const allUser = async (_req: Request, res: Response) => {
     

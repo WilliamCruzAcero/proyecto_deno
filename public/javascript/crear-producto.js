@@ -7,7 +7,7 @@ function load() {
 
 async function crearProducto() {
 
-    const url = "/productos";
+    const url = "/product";
     const nombreElement = document.getElementById('nombre');
     const nombre = nombreElement.value;
 

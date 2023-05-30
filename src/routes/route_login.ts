@@ -1,11 +1,11 @@
 import { Router } from "npm:express";
-import { loginUser } from "../controllers/controller_login.ts";
+import { loginUser, viewLogin } from "../controllers/controller_login.ts";
 
 
 const routesLogin = Router()
 
-
+routesLogin.get('/', viewLogin)
 routesLogin.post('/', loginUser)
-// routes.post('/', )
+
 
 export default routesLogin;
