@@ -8,8 +8,7 @@ import routesUser from "./src/routes/route_user.ts";
 import routesLogin from "./src/routes/route_login.ts";
 import routesProduct from "./src/routes/route_product.ts";
 import routesHome from "./src/routes/route_home.ts";
-
-
+import routesStore from "./src/routes/route_store.ts";
 
 class Server {
 
@@ -17,7 +16,8 @@ class Server {
         home: '/',
         user: '/user',
         login: '/login',
-        product: '/product'
+        product: '/product',
+        store: '/store',
     };
 
     private app = express();
@@ -29,7 +29,6 @@ class Server {
 
     async start() {
 
-        
         await conectDB()
 
         this.app.use(express.json())
@@ -44,20 +43,12 @@ class Server {
             // createParentPath: false
         // }));
 
-        // this.app.set('views', './views');
-        // this.app.set('view engine', 'ejs');
-
         this.app.use(this.paths.home, routesHome)
         this.app.use(this.paths.user, routesUser)
         this.app.use(this.paths.login, routesLogin)
+        this.app.use(this.paths.store, routesStore)
         this.app.use(this.paths.product, routesProduct)
         
-
-
-       
-
-        
-
         this.app.listen(this.port, () => {
           console.log(`Servidor escuchando en el puerto: ${this.port}`)
         })

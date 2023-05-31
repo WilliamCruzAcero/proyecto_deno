@@ -1,0 +1,79 @@
+<% if (products.length > 0 ) { %>
+    <div class="col-8">
+        <div class="row">
+            <% products.forEach(function(product) { %>
+                <div class="container" style="  display: flex;
+                                                flex-wrap: wrap;
+                                                justify-content: center;
+                                                align-items: center;
+                                                margin-top: 20px;
+                                                padding: 0 0px;
+                                                ">
+                    <div class="card" style="   background-color: #fff;
+                                                border-radius: 10px;
+                                                box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+                                                margin: 10px;
+                                                padding: 20px;
+                                                display: flex;
+                                                flex-wrap: wrap;
+                                                width: 50%;">
+                    <div class="imagen-container" style=" flex: 1;
+                                                          text-align: center;
+                                                          width: auto;"    >
+                            <img style="max-width: 50%;
+                            max-height: 50%;
+                            width: auto;" class="imagen" src="<%=product.image%>" alt="<%=product.name%>">
+                        </div>
+                        <div class="info-container" style="flex: 3;
+                        padding-left: 20px;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        width: 50%;">
+                            <h4 class="nombre"><%=product.name%></h4>
+                            <p class="precio">Precio $ <%=product.price%></p>
+                            <p class="cantidad">Inventario <%=product.amount%> kg</p>
+                            <div class="row d-flex ">
+                                <div class="col d-flex align-items-start">
+                                    <button class="btn btn-info btn-sm">
+                                        +
+                                    </button>
+                                    <button class="btn btn-danger btn-sm">
+                                        -
+                                    </button>
+                                    <input >
+                                </div>
+                               
+                                <div class="col d-flex align-items">
+                                    <button class="btn btn-dark">Agregar al carrito</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <% }) %> 
+        </div>
+    </div>
+    <div class="col-4">
+        <div class="row">
+            <div class="container >
+                <div class="row">
+                    <!-- Elementos generados a partir del JSON -->
+                    <main id="items" class="col-sm-8 row"></main>
+                    <!-- Carrito -->
+                    <aside class="col-sm-4">
+                        <h2>Carrito</h2>
+                        <!-- Elementos del carrito -->
+                        <ul id="carrito" class="list-group"></ul>
+                        <hr>
+                        <!-- Precio total -->
+                        <p class="text-right">Total: <span id="total"></span>&dollar;</p>
+                        <button id="boton-vaciar" class="btn btn-danger">Vaciar</button>
+                    </aside>
+                </div>
+            </div>
+        </div>    
+    </div>
+<% } else { %>
+    <h3 class="alert alert-danger">No se encontraron productos</h3>
+<% } %>

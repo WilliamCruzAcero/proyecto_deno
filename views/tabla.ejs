@@ -1,0 +1,23 @@
+<% if (products.length > 0 ) { %>
+    <div class="table-resposive">
+        <table class="table table-dark">
+            <tr style="color: tomato;">
+                <th scope="col">Nombre</th>
+                <th>Precio</th>
+                <th>Imagen</th>
+                <th>cantidad</th> 
+            </tr>
+            <% products.forEach( function(product) { %>
+            <tr>
+                <td><%=product.name%></td>
+                <td><%=product.price%></td>
+                <td><img src="<%=product.image%>" alt="<%=product.name%>" width="200"  height="150";> </img></td>
+                <td><%=product.amount%></td>
+            </tr>
+            <% }) %> 
+        </table>
+    </div>
+    
+<% } else { %>
+    <h3 class="alert alert-danger">No se encontraron productos</h3>  
+<% } %>

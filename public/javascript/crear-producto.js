@@ -9,19 +9,19 @@ async function crearProducto() {
 
     const url = "/product";
     const nombreElement = document.getElementById('nombre');
-    const nombre = nombreElement.value;
+    const name = nombreElement.value;
 
     const precioElement = document.getElementById('precio');
-    const precio = precioElement.value;
+    const price = precioElement.value;
 
     const imagenElement = document.getElementById('imagen');
-    const imagen = imagenElement.value;
+    const image = imagenElement.value;
 
     const cantidadElement = document.getElementById('cantidad');
-    const cantidad = cantidadElement.value;
+    const amount = cantidadElement.value;
 
     const token = localStorage.getItem('token')
-    const data = { nombre, precio, imagen, cantidad }
+    const data = { name, price, image, amount }
 
     const fetchConfig = {
         method: 'POST',

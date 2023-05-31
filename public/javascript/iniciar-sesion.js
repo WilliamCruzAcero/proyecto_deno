@@ -29,7 +29,7 @@ async function obtenerToken() {
         case 200:
             body = await response.json();
             localStorage.setItem("token", body.token)
-            window.location = '/productos?token=' + body.token
+            window.location = '/product?token=' + body.token
             break;
         default:
             localStorage.removeItem("token")

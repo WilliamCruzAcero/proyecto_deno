@@ -1,0 +1,21 @@
+<%- await include('views/header.ejs') %>
+    <body style="background-color: lightgrey;" onload="load()">
+        <%- await include('views/navbar.ejs') %>
+        <div class="container text-center">
+            <div class="row">
+                <div class="col-8 d-flex flex-column align-items-start">
+                    <h1>Bienvenido <%=user.name%> <%=user.lastname%>  </h1>
+                    <p style="font-size: 1.3em; font-style: italic;">
+                        <%=user.email%>     
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+        <%- await include('views/card.ejs', {products}) %>
+        </div>
+             
+        <script src="./javascript/set-navBar-token.js"></script>
+        <script src="./javascript/tienda.js"></script>
+    </body>
+<%- await include('views/footer.ejs') %>

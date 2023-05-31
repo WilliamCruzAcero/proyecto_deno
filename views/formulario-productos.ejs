@@ -1,16 +1,15 @@
 <%- await include('views/header.ejs') %>
 
     <body onload="load()">
-        <%- include('views/navbar.ejs') %>
+        <%- await include('views/navbar.ejs') %>
         <div class="container mt-3">
 
             <div class="container text-center">
                 <div class="row">
                     <div class="col-8 d-flex flex-column align-items-start">
-                        <h1>Bienvenido <%=usuario.nombre%></h1>
-                        <h2><%=usuario.apellido%></h2>
+                        <h1>Bienvenido <%=user.name%> <%=user.lastname%></h1>
                         <p style="font-size: 1.3em; font-style: italic;">
-                            <%=usuario.email%>
+                            <%=user.email%>
                         </p>
                     </div>
                 </div>
@@ -43,13 +42,16 @@
                 <button class="btn btn-success mt-3 mb-5" id="crear">Agregar Producto</button>
 
                 <h2 style="color:blue;">Historial de productos</h2>
-                <%- await include('views/tabla.ejs') %>
-
+              
+                <%- await include('views/tabla.ejs', {products}) %>    
+                
+               
             </div>
+           
         </div>
         <script src="./javascript/set-navBar-token.js"></script>
         <script src="./javascript/crear-producto.js"></script>
-        <!-- <script src="./javascript/card.js"></script>  -->
+        
     </body>
 
 <%- await include('views/footer.ejs') %>

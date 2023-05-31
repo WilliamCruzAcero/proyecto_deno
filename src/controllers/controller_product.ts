@@ -1,52 +1,75 @@
 import { Request, Response } from 'npm:express';
 
 import { userModel } from '../models/model_user.ts';
-import { verificarCampoRequerido } from '../verify/check_field.ts';
 import { Token } from '../models/token.ts';
 
-export const allProducts = async (req: Request & {token: Token}, res: Response) => {
-   
-    const {email} = req.token;
-    const user = await userModel.findOne({email});
-    const products = user?.products;
-    res.json(products);
+const { cwd} = Deno;
+import { renderFileToString } from "https://deno.land/x/dejs@0.10.2/mod.ts";
+import { StatusCodes } from 'https://deno.land/x/https_status_codes@v1.2.0/mod.ts';
+import { WebError } from '../models/model_webError.ts';
 
-}
+export const renderProducts = async (req: Request & {token: Token}, res: Response) => {
+
+    const { email, name, lastname } = req.token
+    const user = await userModel.findOne({ email });
+    const products = user?.products;
+    const renderProducts= await renderFileToString(`${cwd()}/views/formulario-productos.ejs`, {
+        products,
+        user: {
+            name,
+            lastname,
+            email
+        }
+    });
+    res.send(renderProducts)
+};
 
 export const crearProd = async (req: Request & {token: Token}, res: Response) => {
    
     const { email } = req.token; 
     const { name, price, image, amount } = req.body;
 
-    const err = 'Los siguientes campos son requeridos:'
-        
     try {
-        verificarCampoRequerido(name, `${err} Nombre`);
-        verificarCampoRequerido(price, `${err} Precio`);
-        verificarCampoRequerido(image, `${err} Imagen`);
-        verificarCampoRequerido(amount, `${err} Cantidad`);
-    } catch (error) {
-        return res.status(error.status).json({ error: error.message })
-    }
+        if (!name) {
+            throw new WebError('No se puede crear un producto sin nombre', StatusCodes.BAD_REQUEST)
+        }
 
-    const user = await userModel.findOne({ email });
-    if(!user) {
-        return res.status().json('Usuario no encontrado')
-    }
-    const productoExistente = user.products.find(product => product.name === name);
+        if (!price) {
+            throw new WebError('No se puede crear un producto sin precio', StatusCodes.BAD_REQUEST)
+        }
 
-    if (productoExistente) {
-        return res.status().json('El producto ya existe');
-    } 
-    else {        
-        user.products.push({
-            name,
-            price,
-            image,
-            amount
-        })
-        await user.save()
-    }
+        if (!image) {
+            throw new WebError('No se puede crear un producto sin imagen', StatusCodes.BAD_REQUEST)
+        }
+
+        if (!amount) {
+            throw new WebError('No se puede crear un producto sin cantidad', StatusCodes.BAD_REQUEST)
+        }
+
+        const user = await userModel.findOne({ email });
+        if(!user) {
+            throw new WebError('Usuario no encontrado', StatusCodes.BAD_REQUEST)
+        }
+        const productoExistente = user.products.find(product => product.name === name);
     
-    res.json({message: 'Producto creado con exito'});
+        if (productoExistente) {
+            throw new WebError('El producto ya existe', StatusCodes.BAD_REQUEST)
+        } 
+        else {        
+            user.products.push({
+                name,
+                price,
+                image,
+                amount
+            })
+            await user.save()
+    
+            res.json({message: 'Producto creado con exito'});
+        }
+    } catch (error) {
+        const status = error.status || StatusCodes.INTERNAL_SERVER_ERROR;
+            return res.status(status).json({
+            error: error.message
+        }) 
+    }
 }

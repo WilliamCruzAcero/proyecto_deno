@@ -50,7 +50,6 @@ async function guardarUsuario() {
         city: document.getElementById('cityUsuario').value,
         country: document.getElementById('countryUsuario').value
     }
-    console.log(datoIngresado.avatar)
    
     const objetoUsuario = datoIngresado;
                
