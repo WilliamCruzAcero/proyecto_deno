@@ -1,3 +1,4 @@
+// deno-lint-ignore-file
 const authNavLinks = document.querySelectorAll('.auth-nav-link')
 function load () {
     setNavBarToken()
@@ -21,9 +22,9 @@ const logoutButton = document.getElementById('logout');
 logoutButton.addEventListener("click", cerrarSesion);
 
 function parseJwt (token) {
-    var base64Url = token.split('.')[1];
-    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+    let base64Url = token.split('.')[1];
+    let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    let jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
         return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
     }).join(''));
 

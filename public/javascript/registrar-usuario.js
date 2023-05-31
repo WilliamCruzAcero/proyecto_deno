@@ -1,4 +1,4 @@
-function load () {
+function _load () {
     setNavBarToken()
 }
 
