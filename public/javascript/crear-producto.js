@@ -1,7 +1,7 @@
 const createButton = document.getElementById('crear');
 createButton.addEventListener("click", crearProducto);
 
-function load() {
+function _load() {
     setNavBarToken()
 }
 

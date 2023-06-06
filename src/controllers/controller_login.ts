@@ -7,6 +7,7 @@ import { renderFileToString } from "https://deno.land/x/dejs@0.10.2/mod.ts";
 
 import { WebError } from '../models/model_webError.ts';
 import { userModel } from '../models/model_user.ts';
+import logger from "../services/winston/index.ts";
 
 const secret = Deno.env.get("SECRET")
 
@@ -44,7 +45,7 @@ export const loginUser = async (req: Request, res: Response) => {
 
     } catch (error) {
         const status = error.status || StatusCodes.INTERNAL_SERVER_ERROR;
-        // logger.log('error', error.message)
+        logger.log('error', error.message)
         return res.status(status).json({
             error: error.message
         })           

@@ -21,5 +21,5 @@ export const GMAIL_USER = getRequiredEnvVar("GMAIL_USER");
 export const GMAIL_PASSWORD = getRequiredEnvVar("GMAIL_PASSWORD");
 export const ADMIN_EMAIL = getRequiredEnvVar("ADMIN_EMAIL");
 export const SMTP_PORT = parseInt(getRequiredEnvVar("SMTP_PORT"));
-// // export const NODE_ENV = Deno.env.get("NODE_ENV" || 'development');
+export const DENO_ENV = Deno.env.get("DENO_ENV" || 'development');
 

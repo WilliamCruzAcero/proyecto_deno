@@ -11,8 +11,9 @@
                 </div>
             </div>
         </div>
+        
         <div class="row">
-        <%- await include('views/card.ejs', {products}) %>
+        <%- await include('views/card.ejs', {products, shoppingcart}) %>
         </div>
              
         <script src="./javascript/set-navBar-token.js"></script>

@@ -9,15 +9,19 @@ import routesLogin from "./src/routes/route_login.ts";
 import routesProduct from "./src/routes/route_product.ts";
 import routesHome from "./src/routes/route_home.ts";
 import routesStore from "./src/routes/route_store.ts";
+import logger from "./src/services/winston/index.ts";
+import routesAvatar from "./src/routes/route_avatar.ts";
 
 class Server {
 
     private paths = {
         home: '/',
         user: '/user',
+        avatar: '/avatar',
         login: '/login',
         product: '/product',
         store: '/store',
+        cartshopping: '/cartshopping',
     };
 
     private app = express();
@@ -28,7 +32,7 @@ class Server {
     ){}
 
     async start() {
-
+        logger.info('Conectando a la base de datos')
         await conectDB()
 
         this.app.use(express.json())
@@ -37,17 +41,13 @@ class Server {
         this.app.use('/javascript', express.static(path.join('public', 'javascript')))
         this.app.use('/avatares', express.static(path.join('public', 'avatares')))
 
-        // this.app.use(fileUpload({
-        //     useTempFiles: true,
-        //     tempFileDir: '/tmp/',
-            // createParentPath: false
-        // }));
-
         this.app.use(this.paths.home, routesHome)
         this.app.use(this.paths.user, routesUser)
         this.app.use(this.paths.login, routesLogin)
+        this.app.use(this.paths.avatar, routesAvatar)
         this.app.use(this.paths.store, routesStore)
         this.app.use(this.paths.product, routesProduct)
+        // this.app.use(this.paths.cartshopping, routesCartShopping)
         
         this.app.listen(this.port, () => {
           console.log(`Servidor escuchando en el puerto: ${this.port}`)
@@ -55,5 +55,3 @@ class Server {
     }
 }
 export default Server
-
-

@@ -10,7 +10,7 @@ import { WebError } from '../models/model_webError.ts';
 
 export const renderProducts = async (req: Request & {token: Token}, res: Response) => {
 
-    const { email, name, lastname } = req.token
+    const { email, name, lastname } = req.tokenVerified
     const user = await userModel.findOne({ email });
     const products = user?.products;
     const renderProducts= await renderFileToString(`${cwd()}/views/formulario-productos.ejs`, {
@@ -72,4 +72,78 @@ export const crearProd = async (req: Request & {token: Token}, res: Response) =>
             error: error.message
         }) 
     }
+}
+
+export const updateProduct = async (req: Request, res: Response) =>  {
+    
+    const {name, price, image, amount} = req.body
+    const { email } = req.token
+    const user = await userModel.findOne({ email });
+    const products = user?.products;
+
+    if (Number.isNaN(price)) {
+        return res.status(StatusCodes.BAD_REQUEST).json({error: 'El precio ingresado no es valido'});
+    }
+
+    if ( !products ) {
+        return res.status(StatusCodes.BAD_REQUEST).json({error: 'No existen productos en el inventario'});
+    }
+    const product = products.find(product  => product.name === name )
+    
+    if (!product) {
+        return res.status(StatusCodes.BAD_REQUEST).json({error: `El producto ${name} no existe en el inventario`})
+    }
+
+    if (price < 0) {
+            product.price
+    }else{
+        product.price = price
+    }
+    console.log(product.price)
+
+    if (image == '') {
+        product.image
+    }else {
+        product.image = image
+    }
+    
+    if (  amount <= 0 ) {
+        product.amount 
+    } else {
+        product.amount += amount
+    }
+    
+    console.log (product.amount)
+
+    await user.save()
+
+    res.json({message: 'Producto actualizado con exito'});
+
+}
+
+export const deleteProduct = async ( req: Request, res: Response ) => {
+    const {name} = req.body
+    const { email } = req.token
+    const user = await userModel.findOne({ email });
+    const products = user?.products;
+
+    if ( !products ) {
+        return res.status(StatusCodes.BAD_REQUEST).json({error: 'No existen productos en el inventario'});
+    }
+    const product = products.find(product  => product.name === name )
+    
+    if (!product) {
+        return res.status(StatusCodes.BAD_REQUEST).json({error: `El producto ${name} no existe en el inventario`})
+    }
+
+    const index = products.indexOf(product)
+
+    if (index > -1) {
+        products.splice(index, 1);
+    }
+
+    await user.save()
+
+    res.json({message: 'Producto borrado con exito'});
+
 }

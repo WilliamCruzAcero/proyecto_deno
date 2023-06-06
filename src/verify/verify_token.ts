@@ -35,7 +35,7 @@ export function verifyTokenWithRedirect(req: Request & {token: Token}, res: Resp
 
     try {
         const decoded = jwt.verify(token, secret);
-        req.token = decoded;
+        req.tokenVerified = decoded;
         next();
     } catch (_error) {
         res.redirect(StatusCodes.UNAUTHORIZED, '/login')

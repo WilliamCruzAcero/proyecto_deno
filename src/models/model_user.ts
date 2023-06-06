@@ -18,6 +18,11 @@ export interface IUser {
         image: string;
         amount: number;
     }]
+    shoppingcart: [{
+        name: string;
+        price: number;
+        amount: number;
+    }]
 }
 
 export const userSchema = new Schema<IUser>({
@@ -37,8 +42,13 @@ export const userSchema = new Schema<IUser>({
         price: {type: Number, required: true, default: 0},
         image: {type: String, required: true, default: ''},
         amount: {type: Number, required: true, default: 0},
-        
-    }]
+        }],
+    shoppingcart: [{
+        name: {type: String, required: true},
+        price: {type: Number, required: true},
+        amount: {type: Number, required: true},
+        }]
+
 });
 
 export const userModel = model<IUser>('User', userSchema);
